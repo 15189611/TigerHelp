@@ -20,7 +20,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView() { 
     }
 
     @Override
