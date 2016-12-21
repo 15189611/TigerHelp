@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <include layout="@layout/in_toolbar"/>
+
+    <com.android.tigerhelp.widget.NoScrollViewPager
+        android:id="@+id/fm_content"
+        android:layout_below="@+id/llToolbarParent"
+        android:layout_above="@+id/mMainTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/mMainTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <com.android.tigerhelp.ui.TabIndicator
+            android:id="@+id/mMainIndicator"
+            android:layout_width="fill_parent"
+            android:layout_height="53dp"
+            android:background="@color/white"
+            android:clickable="true" />
+    </LinearLayout>
+
+</RelativeLayout>
