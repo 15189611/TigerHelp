@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TigerHelp</string>
+
+    <string name="input_phone_number">请输入手机号</string>
+    <string name="input_password">请输入密码</string>
+    <string name="login_self">自动登录</string>
+    <string name="reg">注册</string>
+    <string name="login">登录</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="code_register">请输入验证码</string>
 </resources>

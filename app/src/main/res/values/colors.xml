@@ -12,4 +12,12 @@
 
     <color name="fengexian">#E5E5E5</color>
 
+
+    <color name="phone_number_login">#abaeb7</color>
+    <color name="black">#000000</color>
+
+    <color name="transparent_white_80">#CCFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="texttran">#EEEEEEEE</color>
+
 </resources>
