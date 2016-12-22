@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity implements TabIndicator.OnTabClic
     public static final int XIAOXI = 3;
     public static final int MYSELF = 4;
 
-    private int currentTabIndex;
+    private int currentTabIndex = 0;
 
     private List<Fragment> fragmentList;
     private ConsultFragment consultFragment;
@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity implements TabIndicator.OnTabClic
     @Override
     protected void initView() {
         setTitle("首页");
+        toolbarParent.setVisibility(View.GONE);
     }
 
     @Override
@@ -137,9 +138,9 @@ public class MainActivity extends BaseActivity implements TabIndicator.OnTabClic
         @Override
         public void onPageSelected(int position) {
             currentTabIndex = position;
-            switch (position){
+            switch (currentTabIndex){
                 case INDEX:
-                    switchTitleName(position,false);
+                    switchTitleName(position,true);
                     break;
                 case ZIXUN:
                     switchTitleName(position,false);
@@ -166,30 +167,40 @@ public class MainActivity extends BaseActivity implements TabIndicator.OnTabClic
             case INDEX:
                 if(isHideToolBar){
                     toolbarParent.setVisibility(View.GONE);
+                }else{
+                    toolbarParent.setVisibility(View.VISIBLE);
                 }
                 tvTitle.setText("我的");
                 break;
             case ZIXUN:
                 if(isHideToolBar){
                     toolbarParent.setVisibility(View.GONE);
+                }else {
+                    toolbarParent.setVisibility(View.VISIBLE);
                 }
                 tvTitle.setText("咨询");
                 break;
             case HUODONG:
                 if(isHideToolBar){
                     toolbarParent.setVisibility(View.GONE);
+                }else{
+                    toolbarParent.setVisibility(View.VISIBLE);
                 }
                 tvTitle.setText("活动");
                 break;
             case XIAOXI:
                 if(isHideToolBar){
                     toolbarParent.setVisibility(View.GONE);
+                }else{
+                    toolbarParent.setVisibility(View.VISIBLE);
                 }
                 tvTitle.setText("消息");
                 break;
             case MYSELF:
                 if(isHideToolBar){
                     toolbarParent.setVisibility(View.GONE);
+                }else{
+                    toolbarParent.setVisibility(View.VISIBLE);
                 }
                 tvTitle.setText("我的");
                 break;

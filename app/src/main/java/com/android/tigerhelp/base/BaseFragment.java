@@ -48,6 +48,9 @@ public abstract class BaseFragment extends Fragment {
         Logger.i("FragmentName=" + TAG);
     }
 
+    /**
+     * 该方法当fragment第一次显示可见时调用,加载网络数据调用
+     */
     protected abstract void fetchObjectData();
 
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.android.tigerhelp.recyclerview.View.PullRefreshRecycleView
+        android:id="@+id/recyclerIndex"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_forty_eight">
+
+        <ImageView
+            android:id="@+id/ivScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_ten"
+            android:src="@mipmap/scan" />
+
+        <EditText
+            android:id="@+id/etSearchGod"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ivScan"
+            android:background="@mipmap/search_bg"
+            android:drawableLeft="@mipmap/sear_icon"
+            android:drawablePadding="@dimen/margin_five"
+            android:drawableRight="@mipmap/cancel"
+            android:hint="测试咨询"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="@dimen/margin_ten"
+            android:paddingRight="@dimen/margin_ten"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/sp_13"
+            android:layout_marginRight="20dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_margin="@dimen/margin_ten"
+            android:src="@mipmap/message_icon" />
+
+        <ImageView
+            android:id="@+id/messageCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/message_red"
+            android:layout_marginRight="@dimen/margin_eight"
+            android:layout_marginTop="@dimen/margin_ten"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
