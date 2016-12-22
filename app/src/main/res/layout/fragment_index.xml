@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <View
+        android:id="@+id/viewTitleBarBg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_forty_eight"
+        android:alpha="0"
+        android:background="@color/zhonghuise" />
+
     <RelativeLayout
         android:id="@+id/rlTitle"
         android:layout_width="match_parent"
@@ -37,7 +44,6 @@
             android:paddingRight="@dimen/margin_ten"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
             android:textSize="@dimen/sp_13"
             android:layout_marginRight="20dp"
             />

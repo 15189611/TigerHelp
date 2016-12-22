@@ -20,4 +20,8 @@
     <color name="transparent">#00000000</color>
     <color name="texttran">#EEEEEEEE</color>
 
+    <color name="white_70">#70FFFFFF</color>
+    <color name="zhonghuise">#9B9B9B</color>
+    <color name="blue">#1c9bff</color>
+
 </resources>

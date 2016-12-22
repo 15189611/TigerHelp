@@ -2,9 +2,12 @@ package com.android.tigerhelp.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -40,6 +43,9 @@ public class IndexFragment extends BaseFragment {
     @Bind(R.id.ivScan)
     ImageView ivScan;
 
+    @Bind(R.id.viewTitleBarBg)
+    View viewTitleBarBg;
+
     private List<HomeAllDataModel> homeAllDatas = new ArrayList<>();
 
     private List<String> bannerDatas = new ArrayList<>();
@@ -47,6 +53,12 @@ public class IndexFragment extends BaseFragment {
     private List<String> godListDatas = new ArrayList<>();
 
     private HomeAdapter homeAdapter ;
+    private ChLinearLayoutManager layoutManager;
+
+    private boolean isScrollIdle = true; // 是否在滑动
+    private View itemTopView;
+    private int topViewTop;
+    private int topViewHeight;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,13 +94,37 @@ public class IndexFragment extends BaseFragment {
         homeAllDatas.add(2,godListDatas);
 
         homeAdapter = new HomeAdapter(getActivity(),homeAllDatas);
-        ChLinearLayoutManager layoutManager = new ChLinearLayoutManager(getActivity());
+        layoutManager = new ChLinearLayoutManager(getActivity());
         refreshRecycleView.setLayoutManager(layoutManager);
         refreshRecycleView.setNoLoadMore(true);
         refreshRecycleView.setAdapter(homeAdapter);
     }
 
     private void initView() {
+        refreshRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                isScrollIdle = (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (itemTopView == null) {
+                    itemTopView = refreshRecycleView.getChildAt(1 - layoutManager.findFirstVisibleItemPosition());
+                }
+                if (itemTopView != null) {
+                    topViewTop = itemTopView.getTop();
+                    topViewHeight = itemTopView.getHeight();
+                }
+                if ((isScrollIdle && topViewTop < 0)) {
+                    return;
+                }
+                setTitleBarAlpha();
+            }
+        });
+
         refreshRecycleView.setLoadDataListener(new LoadDataListener() {
             @Override
             public void onRefresh() {
@@ -104,6 +140,35 @@ public class IndexFragment extends BaseFragment {
     protected void fetchObjectData() {
     }
 
+    // 处理标题栏颜色渐变
+    private void setTitleBarAlpha() {
+        float titleBarAlpha;
+        float space = Math.abs(topViewTop) * 1f;
+        float moveMaxHeight = topViewHeight - rlTitle.getHeight();
+
+        if (topViewTop >= 0 || moveMaxHeight <= 0) {
+            titleBarAlpha = 0f;
+        } else {
+            float titleRate = space / moveMaxHeight;
+            titleBarAlpha = getTitleBarAlpha(titleRate);
+        }
+        Log.e("Charles2" ,"titleBar==" +titleBarAlpha);
+        viewTitleBarBg.setAlpha(titleBarAlpha);
+
+        if (titleBarAlpha == 0f) {
+        } else if (titleBarAlpha == 1f) {
+            rlTitle.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private float getTitleBarAlpha(float rate) {
+        if (rate < 0.01f) {
+            rate = 0f;
+        } else if (rate >= 1f) {
+            rate = 1f;
+        }
+        return rate;
+    }
     
     @Override
     public void onDestroy() {
