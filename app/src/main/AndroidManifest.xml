@@ -29,6 +29,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             />
+        <activity android:name=".activity.PersonDataActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            />
+
     </application>
 
 </manifest>

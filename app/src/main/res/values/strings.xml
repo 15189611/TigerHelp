@@ -12,4 +12,18 @@
     <string name="loading">正在加载中...</string>
     <string name="load_failed">加载失败，请点我重试</string>
     <string name="head">头像:</string>
+    <string name="name">昵称:</string>
+    <string name="baby_relation">与宝宝的关系:</string>
+    <string name="address">详细地址:</string>
+    <string name="reality_name">真实名字:</string>
+    <string name="birthday">出生年月日:</string>
+    <string name="personalized_signature">个性签名:</string>
+    <string name="baby_name">宝宝昵称:</string>
+    <string name="baby_name_reality">宝宝真实姓名:</string>
+    <string name="baby_sex">宝宝性别:</string>
+    <string name="baby_birthday">宝宝出生年月日:</string>
+    <string name="baby_school">宝宝学校:</string>
+    <string name="baby_class">宝宝班级:</string>
+    <string name="baby_add">添加宝宝</string>
+    <string name="apply_expert">申请达人</string>
 </resources>

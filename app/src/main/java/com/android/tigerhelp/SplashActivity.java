@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.android.tigerhelp.activity.MainActivity;
+import com.android.tigerhelp.activity.PersonDataActivity;
 import com.android.tigerhelp.base.BaseActivity;
 import com.android.tigerhelp.entity.UserModel;
 import com.android.tigerhelp.http.AppException;
 import com.android.tigerhelp.http.responselistener.ResponseListener;
 import com.android.tigerhelp.request.UserRequest;
-
 import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscription;
@@ -42,6 +42,7 @@ public class SplashActivity extends BaseActivity {
                 Log.e("Charles2" , "失败");
             }
         });
+        System.currentTimeMillis();
     }
 
     @Override
@@ -53,7 +54,10 @@ public class SplashActivity extends BaseActivity {
         subscribe = Observable.timer(3, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
             @Override
             public void call(Long aLong) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                /*Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();*/
+                Intent intent = new Intent(SplashActivity.this, PersonDataActivity.class);
                 startActivity(intent);
                 finish();
             }
