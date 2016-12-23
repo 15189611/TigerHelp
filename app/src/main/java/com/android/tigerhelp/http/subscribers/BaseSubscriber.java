@@ -1,0 +1,79 @@
+package com.android.tigerhelp.http.subscribers;
+
+import android.app.Activity;
+import android.util.Log;
+
+import com.android.tigerhelp.http.AppException;
+import com.android.tigerhelp.http.TigerRequest;
+import com.android.tigerhelp.http.responselistener.ResponseListener;
+
+import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.util.concurrent.TimeoutException;
+
+import rx.Subscriber;
+
+public class BaseSubscriber<T> extends Subscriber<T> {
+
+    protected Activity mActivity;
+    protected String mRequestMethod;
+    protected ResponseListener<T> mResponseListener;
+
+    public BaseSubscriber(ResponseListener<T> responseListener) {
+        mResponseListener = responseListener;
+    }
+
+    public BaseSubscriber(String requestMethod, ResponseListener<T> responseListener) {
+        mRequestMethod = requestMethod;
+        mResponseListener = responseListener;
+    }
+
+    public BaseSubscriber(Activity activity, String requestMethod, ResponseListener<T> responseListener) {
+        mActivity = activity;
+        mRequestMethod = requestMethod;
+        mResponseListener = responseListener;
+    }
+
+    @Override
+    public void onCompleted() {
+        removeRequest();
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        removeRequest();
+        if (mResponseListener != null) {
+            AppException appException;
+
+            if (e instanceof UnknownHostException || e instanceof ConnectException || e instanceof SocketException) {
+                appException = new AppException(AppException.ExceptionStatus.NetWorkException, AppException.NETWORK_ERROR);
+            } else if (e instanceof SocketTimeoutException) {
+                appException = new AppException(AppException.ExceptionStatus.TimeoutException, AppException.TIMEOUT_ERROR);
+            } else if (e instanceof TimeoutException) {
+                appException = new AppException(AppException.ExceptionStatus.TimeoutException, AppException.TIMEOUT_ERROR);
+            } else if (e instanceof AppException) {
+                appException = (AppException) e;
+            } else {
+                appException = new AppException(AppException.ExceptionStatus.ResultException, AppException.RESULT_ERROR);
+            }
+
+            mResponseListener.onFailure(appException);
+        }
+        Log.i("Charles2", "失败=="+ e.toString());
+    }
+
+    @Override
+    public void onNext(T t) {
+        if (mResponseListener != null) {
+            mResponseListener.onSuccess(t);
+        }
+    }
+
+    protected void removeRequest() {
+        if (mActivity != null && mRequestMethod != null && mRequestMethod.length() > 0) {
+            TigerRequest.removeRequest(mActivity, mRequestMethod);
+        }
+    }
+}

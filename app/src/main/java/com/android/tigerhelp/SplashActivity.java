@@ -1,9 +1,15 @@
 package com.android.tigerhelp;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.android.tigerhelp.activity.MainActivity;
 import com.android.tigerhelp.base.BaseActivity;
+import com.android.tigerhelp.entity.UserModel;
+import com.android.tigerhelp.http.AppException;
+import com.android.tigerhelp.http.responselistener.ResponseListener;
+import com.android.tigerhelp.request.UserRequest;
+
 import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscription;
@@ -25,7 +31,17 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        UserRequest.newInstance().login(this, "login", new ResponseListener<UserModel>() {
+            @Override
+            public void onSuccess(UserModel userModel) {
+                Log.e("Charles2" , "成功");
+            }
 
+            @Override
+            public void onFailure(AppException e) {
+                Log.e("Charles2" , "失败");
+            }
+        });
     }
 
     @Override

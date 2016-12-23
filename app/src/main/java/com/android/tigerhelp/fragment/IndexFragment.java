@@ -152,7 +152,7 @@ public class IndexFragment extends BaseFragment {
             float titleRate = space / moveMaxHeight;
             titleBarAlpha = getTitleBarAlpha(titleRate);
         }
-        Log.e("Charles2" ,"titleBar==" +titleBarAlpha);
+
         viewTitleBarBg.setAlpha(titleBarAlpha);
 
         if (titleBarAlpha == 0f) {
