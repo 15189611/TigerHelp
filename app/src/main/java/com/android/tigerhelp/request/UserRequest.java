@@ -2,6 +2,7 @@ package com.android.tigerhelp.request;
 
 import android.app.Activity;
 
+import com.android.tigerhelp.entity.FileUploadModel;
 import com.android.tigerhelp.entity.UserModel;
 import com.android.tigerhelp.http.TigerRequest;
 import com.android.tigerhelp.http.responselistener.ResponseListener;
@@ -21,15 +22,60 @@ public class UserRequest extends TigerRequest {
         return new UserRequest();
     }
 
-    public void login(Activity activity, String requestMethod, ResponseListener<UserModel> listener){
+    /***
+     * 用户登录
+     * @param activity
+     * @param mobile
+     * @param password
+     * @param requestMethod
+     * @param listener
+     */
+    public void login(Activity activity,String mobile,String password, String requestMethod, ResponseListener<UserModel> listener){
         Map<String, Object> map = new HashMap<>();
-        map.put("mobileNum", "13788888888");
-        map.put("password", "670b14728ad9902aecba32e22fa4f6bd");
+        map.put("mobileNum", mobile);
+        map.put("password", password);
 
         Type type = new TypeToken<UserModel>() {
         }.getType();
-        requestPostWithActivity(activity,requestMethod,map,type,listener);
+        requestDataWithDialog(activity,requestMethod,map,type,listener);
 
+    }
+
+    /***
+     * 用户注册获取验证码
+     * @param activity
+     * @param mobileNum
+     * @param type
+     * @param requestMethod
+     * @param listener
+     */
+    public void getCode(Activity activity, String mobileNum, String type, String requestMethod, ResponseListener<String> listener){
+        Map<String, Object> map = new HashMap<>();
+        map.put("mobileNum", mobileNum);
+        map.put("type", type);//type:1-注册获取验证码（一键登录页调用此），2-忘记密码获取验证码, 3-设置支付密码获取验证码
+
+        Type typeModel = new TypeToken<String>() {
+        }.getType();
+        requestDataWithDialog(activity,requestMethod,map,typeModel,listener);
+    }
+
+    /****
+     * 用户注册
+     * @param activity
+     * @param mobileNum
+     * @param code
+     * @param requestMethod
+     * @param listener
+     */
+    public void register(Activity activity,String mobileNum,String code,String requestMethod,ResponseListener<UserModel> listener){
+        Map<String,Object> map = new HashMap<>();
+        map.put("mobileNum",mobileNum);
+        map.put("code",code);
+
+        Type type = new TypeToken<UserModel>() {
+        }.getType();
+
+        requestDataWithDialog(activity,requestMethod,map,type,listener);
     }
 
 }

@@ -15,6 +15,7 @@
         android:textColorHint="@color/phone_number_login"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:inputType="number"
         android:textSize="@dimen/margin_sixteen"
         android:drawablePadding="11dp"
         android:paddingLeft="12dp"
@@ -31,6 +32,7 @@
         android:textColorHint="@color/phone_number_login"
         android:textSize="@dimen/margin_sixteen"
         android:drawablePadding="13dp"
+        android:inputType="textPassword"
         android:paddingLeft="12dp"
         android:paddingTop="3dp"
         android:layout_marginTop="17dp"
@@ -84,7 +86,7 @@
                android:layout_height="wrap_content"
                android:text="@string/reg"
                android:layout_centerVertical="true"
-               android:paddingLeft="20dp"
+               android:paddingLeft="40dp"
                android:paddingTop="20dp"
                android:layout_alignParentRight="true"
                android:layout_marginRight="83dp"
@@ -105,7 +107,7 @@
                android:layout_centerVertical="true"
                android:paddingTop="20dp"
                android:layout_alignParentRight="true"
-               android:layout_marginRight="12dp"
+               android:paddingRight="@dimen/margin_twelve"
                android:textColor="@color/black"
                />
        </RelativeLayout>

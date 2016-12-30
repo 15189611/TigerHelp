@@ -1,5 +1,7 @@
 package com.android.tigerhelp.util;
 
+import android.util.Log;
+
 import com.android.tigerhelp.http.AppException;
 import com.google.gson.Gson;
 
@@ -41,6 +43,7 @@ public class JsonParser {
             }
             return gson.toJson(t);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new AppException(AppException.ExceptionStatus.ParseException, AppException.PARSE_ERROR);
         }
     }

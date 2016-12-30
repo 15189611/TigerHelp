@@ -1,6 +1,7 @@
 package com.android.tigerhelp.http;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.android.tigerhelp.http.apiservice.ApiService;
 import com.android.tigerhelp.http.responselistener.ResponseListener;
@@ -192,7 +193,7 @@ public class TigerRequest {
                 if (responseResult.data != null) {
                     return JsonParser.deserializeByJson(JsonParser.serializeToJson(responseResult.data), type); //将json字符串转成实体类
                 }else{
-                    return null;
+                    throw new AppException(responseResult.state+"", responseResult.msg);
                 }
             }
 

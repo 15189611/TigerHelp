@@ -3,6 +3,7 @@ package com.android.tigerhelp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -11,6 +12,12 @@ import android.widget.TextView;
 
 import com.android.tigerhelp.R;
 import com.android.tigerhelp.base.BaseActivity;
+import com.android.tigerhelp.entity.UserModel;
+import com.android.tigerhelp.http.AppException;
+import com.android.tigerhelp.http.responselistener.ResponseListener;
+import com.android.tigerhelp.request.UserRequest;
+import com.android.tigerhelp.util.MD5;
+import com.android.tigerhelp.util.PhoneUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -78,32 +85,56 @@ public class LoginActivity extends BaseActivity {
         String passwordStr = password.getText().toString().trim();
 
         if(TextUtils.isEmpty(mobileNum)){
-//            AppToast.showToast(this,"手机号不能为空");
+            showToast("手机号不能为空");
+            return;
+        }
+
+        if(!PhoneUtil.isMobileNO(mobileNum)){/**校验手机号是否规范*/
+            showToast("请输入正确的11位手机号号码");
             return;
         }
 
         if(TextUtils.isEmpty(passwordStr)){
-//            AppToast.showToast(this,"密码不能为空");
+            showToast("密码不能为空");
             return;
         }
 
-//        loginRequest("13788888888","670b14728ad9902aecba32e22fa4f6bd");
-
+        String passwordMd5 = MD5.getMD5Str("000000");
+        Log.i("TAG","pass----md5======"+passwordMd5);
+        mobileNum = "13788888888";/**测试号码*/
+        loginRequest(mobileNum,passwordMd5);
     }
 
+   private void loginRequest(String mobile,String password){
+       UserRequest.newInstance().login(this, mobile,password,"login", new ResponseListener<UserModel>() {
+           @Override
+           public void onSuccess(UserModel userModel) {
+               Log.e("Charles2" , "成功");
+               int userid = userModel.getUserid();
+               String token = userModel.getToken();
+               boolean turnUpdateUser = userModel.isTurnUpdateUser();
+               /**是否跳转到更新用户资料页面,true是，false:直接进首页*/
+               if(turnUpdateUser){
+                  startActivity(new Intent(LoginActivity.this,PersonDataActivity.class));
+                   LoginActivity.this.finish();
+               }else{
+                  /* startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                   LoginActivity.this.finish();*/
 
-   /* private void loginRequest(String mobile,String password){
-        LoginRequest.newInstance().login(this, mobile, password, Method.LOGIN.toString(), new ResponseListener<LoginModel>() {
-            @Override
-            public void onSuccess(LoginModel loginModel) {
-                Log.i("TAG","login------onSuccess");
-            }
+                   startActivity(new Intent(LoginActivity.this,PersonDataActivity.class));
+                   LoginActivity.this.finish();
+               }
+           }
 
-            @Override
-            public void onFailure(AppException e) {
-                Log.i("TAG","login------onFailure"+e.errorMsg);
-            }
-        });
-    }*/
+           @Override
+           public void onFailure(AppException e) {
+               if(!TextUtils.isEmpty(e.errorMsg)){
+                   showToast(e.errorMsg);
+               }else{
+                   showToast("登录失败");
+               }
+           }
+       });
+    }
 
 }

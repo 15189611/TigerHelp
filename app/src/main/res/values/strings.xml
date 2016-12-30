@@ -26,4 +26,22 @@
     <string name="baby_class">宝宝班级:</string>
     <string name="baby_add">添加宝宝</string>
     <string name="apply_expert">申请达人</string>
+    <string name="commit">提交</string>
+    <string name="commit_sure">确定</string>
+    <string name="name_hint">中英文数字符号</string>
+    <string name="baby_hint">妈妈/爸爸/爷爷/奶奶/外公/外婆/(单选)</string>
+    <string name="address_hint">小区号+楼号 住宅＋叠加别墅需记录的层号,室号</string>
+    <string name="real_name_hint">中英文#输入后只能修改1次</string>
+    <string name="birthday_hint">1978-05-09</string>
+    <string name="signature">个性签名最多50个字</string>
+    <string name="baby_name_hint">中英文符号</string>
+    <string name="select_sex">男,女输入后只能修改1此</string>
+    <string name="baby_birthday_hint">日期控件,输入后只能修改1次</string>
+    <string name="baby_school_hint">请输入宝宝学校</string>
+    <string name="baby_class_hint">请输入宝宝班级</string>
+    <string name="take_photo">拍照</string>
+    <string name="select_photo">从相册中选择</string>
+    <string name="cancel">取消</string>
+
+
 </resources>

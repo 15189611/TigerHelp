@@ -23,6 +23,8 @@
     <color name="white_70">#70FFFFFF</color>
     <color name="zhonghuise">#9B9B9B</color>
     <color name="blue">#1c9bff</color>
-    <color name="all_bg">#f6f7fb</color>
+    <color name="activity_bg">#f6f7fb</color>
+
+    <color name="person_data_color">#c0c0c0</color>
 
 </resources>

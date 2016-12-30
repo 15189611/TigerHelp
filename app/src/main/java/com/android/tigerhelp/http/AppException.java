@@ -16,7 +16,7 @@ public class AppException extends RuntimeException {
     public static final String NETWORK_ERROR = "网络连接失败,请检查网络连接";
     public static final String TIMEOUT_ERROR = "网络连接超时,请重试";
 
-    public enum ExceptionStatus {
+    public enum     ExceptionStatus {
         IllegalStateException,
         FileNotFoundException,
         ParseException,

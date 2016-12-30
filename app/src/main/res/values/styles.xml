@@ -32,7 +32,7 @@
     </style>
 
     <style name="Text_Name_Person">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">110dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/margin_five</item>
         <item name="android:layout_centerVertical">true</item>
@@ -41,11 +41,23 @@
 
     <style name="Text_Name_Person_Value">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">43dp</item>
         <item name="android:background">@color/white</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">#2e3844</item>
+        <item name="android:textColorHint">#2e3844</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="dialog_style" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>

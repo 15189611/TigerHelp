@@ -3,6 +3,7 @@ package com.android.tigerhelp;
 import android.content.Intent;
 import android.util.Log;
 
+import com.android.tigerhelp.activity.LoginActivity;
 import com.android.tigerhelp.activity.MainActivity;
 import com.android.tigerhelp.activity.PersonDataActivity;
 import com.android.tigerhelp.base.BaseActivity;
@@ -31,7 +32,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        UserRequest.newInstance().login(this, "login", new ResponseListener<UserModel>() {
+        UserRequest.newInstance().login(this,"","", "login", new ResponseListener<UserModel>() {
             @Override
             public void onSuccess(UserModel userModel) {
                 Log.e("Charles2" , "成功");
@@ -57,7 +58,7 @@ public class SplashActivity extends BaseActivity {
                 /*Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();*/
-                Intent intent = new Intent(SplashActivity.this, PersonDataActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
