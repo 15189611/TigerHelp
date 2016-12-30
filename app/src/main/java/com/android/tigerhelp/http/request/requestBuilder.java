@@ -11,15 +11,15 @@ public class requestBuilder {
 
     Map<String, Object> methodParams = new HashMap<>();
 
-    public static requestBuilder newInstance(String method) {
-        return new requestBuilder(method);
+    public static requestBuilder newInstance() {
+        return new requestBuilder();
     }
 
-    public requestBuilder(String method){
-        init(method);
+    public requestBuilder(){
+        init();
     }
 
-    private void init(String method) {
+    private void init() {
 
     }
 

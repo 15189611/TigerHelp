@@ -3,7 +3,6 @@ package com.android.tigerhelp.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,13 @@ import android.widget.RelativeLayout;
 import com.android.tigerhelp.R;
 import com.android.tigerhelp.adapter.HomeAdapter;
 import com.android.tigerhelp.base.BaseFragment;
+import com.android.tigerhelp.db.ShareUtils;
 import com.android.tigerhelp.entity.HomeAllDataModel;
 import com.android.tigerhelp.recyclerview.LayoutManager.ChLinearLayoutManager;
 import com.android.tigerhelp.recyclerview.Listener.LoadDataListener;
 import com.android.tigerhelp.recyclerview.View.PullRefreshRecycleView;
+import com.android.tigerhelp.util.BussinessUtil;
+import com.android.tigerhelp.util.MD5;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +140,12 @@ public class IndexFragment extends BaseFragment {
 
     @Override
     protected void fetchObjectData() {
+        String userId = (String) ShareUtils.get(getActivity(), "userId");
+        String token = (String) ShareUtils.get(getActivity(), "token");
+        if(BussinessUtil.isValid(userId) && BussinessUtil.isValid(token)){
+            String sign = MD5.getMD5Str(String.valueOf(System.currentTimeMillis() + userId + token + userId));
+        }
+
     }
 
     // 处理标题栏颜色渐变

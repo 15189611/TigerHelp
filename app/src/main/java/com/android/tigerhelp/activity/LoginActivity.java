@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.tigerhelp.R;
 import com.android.tigerhelp.base.BaseActivity;
+import com.android.tigerhelp.db.ShareUtils;
 import com.android.tigerhelp.entity.UserModel;
 import com.android.tigerhelp.http.AppException;
 import com.android.tigerhelp.http.responselistener.ResponseListener;
@@ -109,19 +110,19 @@ public class LoginActivity extends BaseActivity {
        UserRequest.newInstance().login(this, mobile,password,"appUser/login", new ResponseListener<UserModel>() {
            @Override
            public void onSuccess(UserModel userModel) {
-               Log.e("Charles2" , "成功");
+               showToast("登录成功");
                int userid = userModel.getUserid();
                String token = userModel.getToken();
+               ShareUtils.save(LoginActivity.this,"userId",userid);
+               ShareUtils.save(LoginActivity.this,"token",token);
+
                boolean turnUpdateUser = userModel.isTurnUpdateUser();
                /**是否跳转到更新用户资料页面,true是，false:直接进首页*/
                if(turnUpdateUser){
                   startActivity(new Intent(LoginActivity.this,PersonDataActivity.class));
                    LoginActivity.this.finish();
                }else{
-                  /* startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                   LoginActivity.this.finish();*/
-
-                   startActivity(new Intent(LoginActivity.this,PersonDataActivity.class));
+                   startActivity(new Intent(LoginActivity.this,MainActivity.class));
                    LoginActivity.this.finish();
                }
            }
