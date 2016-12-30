@@ -31,7 +31,7 @@ public class RetrofitManager {
                 .build();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://test1.tigerbang.cn/tigerUnion/mobile/appUser/")
+                .baseUrl("http://test1.tigerbang.cn/tigerUnion/mobile/")
                 .client(mOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

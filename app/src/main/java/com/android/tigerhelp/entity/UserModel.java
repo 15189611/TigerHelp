@@ -37,4 +37,13 @@ public class UserModel implements Serializable {
     public void setTurnUpdateUser(boolean turnUpdateUser) {
         this.turnUpdateUser = turnUpdateUser;
     }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "userId=" + userId +
+                ", token='" + token + '\'' +
+                ", turnUpdateUser=" + turnUpdateUser +
+                '}';
+    }
 }

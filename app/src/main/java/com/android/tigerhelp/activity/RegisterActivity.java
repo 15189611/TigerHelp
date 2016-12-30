@@ -130,7 +130,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public void getRegisterCode(String mobileNum,String type){
-        UserRequest.newInstance().getCode(this, mobileNum, type, "getCode", new ResponseListener<String>() {
+        UserRequest.newInstance().getCode(this, mobileNum, type, "appUser/getCode", new ResponseListener<String>() {
             @Override
             public void onSuccess(String state) {
             }
@@ -157,7 +157,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public void registerRequest(String mobileNum,String code){
-        UserRequest.newInstance().register(this, mobileNum, code, "register", new ResponseListener<UserModel>() {
+        UserRequest.newInstance().register(this, mobileNum, code, "appUser/register", new ResponseListener<UserModel>() {
             @Override
             public void onSuccess(UserModel userModel) {
                 String token = userModel.getToken();

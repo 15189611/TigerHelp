@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+
     signingConfigs {
         config {
             keyAlias 'TigerHelp'
@@ -9,6 +10,7 @@ android {
             storePassword '924924'
         }
     }
+
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
     defaultConfig {
@@ -18,12 +20,20 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.config
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug{
+            signingConfig signingConfigs.config
+        }
     }
+
 }
 
 dependencies {

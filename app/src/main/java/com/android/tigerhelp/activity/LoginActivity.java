@@ -106,7 +106,7 @@ public class LoginActivity extends BaseActivity {
     }
 
    private void loginRequest(String mobile,String password){
-       UserRequest.newInstance().login(this, mobile,password,"login", new ResponseListener<UserModel>() {
+       UserRequest.newInstance().login(this, mobile,password,"appUser/login", new ResponseListener<UserModel>() {
            @Override
            public void onSuccess(UserModel userModel) {
                Log.e("Charles2" , "成功");

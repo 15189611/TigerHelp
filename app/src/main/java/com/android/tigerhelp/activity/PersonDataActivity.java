@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -161,7 +160,7 @@ public class PersonDataActivity  extends BaseActivity{
      * @param view
      */
     private void getRelation(final Dialog dialog, final View view){
-        PersonDataRequest.newInstance().babyRelation(this, "relation/get", new ResponseListener<List<RelationBabyItemModel>>() {
+        PersonDataRequest.newInstance().babyRelation(this, "appUser/relation/get", new ResponseListener<List<RelationBabyItemModel>>() {
                     @Override
                     public void onSuccess(List<RelationBabyItemModel> data) {
                         babyDataAdapter.getData().clear();
@@ -238,7 +237,7 @@ public class PersonDataActivity  extends BaseActivity{
      * @param image
      */
     public void fileUpload(String image){
-        PersonDataRequest.newInstance().fileUpload(this, image, "upload/image", new ResponseListener<FileUploadModel>() {
+        PersonDataRequest.newInstance().fileUpload(this, image, "appUser/upload/image", new ResponseListener<FileUploadModel>() {
             @Override
             public void onSuccess(FileUploadModel fileUploadModel) {
                 String url = fileUploadModel.getUrl();
