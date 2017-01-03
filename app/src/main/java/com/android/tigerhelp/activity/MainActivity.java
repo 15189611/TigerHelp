@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements TabIndicator.OnTabClic
         switchToolBarHide(isHideToolBar);
         switch (currentTabIndex){
             case INDEX:
-                tvTitle.setText("我的");
+                tvTitle.setText("首页");
                 break;
             case ZIXUN:
                 tvTitle.setText("咨询");
@@ -193,9 +193,9 @@ public class MainActivity extends BaseActivity implements TabIndicator.OnTabClic
 
     @Override
     protected void onDestroy() {
+        clearFragments();
         super.onDestroy();
         ButterKnife.unbind(this);
-        clearFragments();
     }
 
     private void clearFragments() {

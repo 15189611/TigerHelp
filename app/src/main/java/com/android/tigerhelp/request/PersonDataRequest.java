@@ -1,21 +1,18 @@
 package com.android.tigerhelp.request;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.android.tigerhelp.entity.FileUploadModel;
 import com.android.tigerhelp.entity.RelationBabyItemModel;
-import com.android.tigerhelp.entity.RelationBabyModel;
 import com.android.tigerhelp.http.TigerRequest;
+import com.android.tigerhelp.http.request.RequestParamBuilder;
 import com.android.tigerhelp.http.responselistener.ResponseListener;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by huangTing on 2016/12/27.
@@ -35,13 +32,13 @@ public class PersonDataRequest extends TigerRequest {
      * @param listener
      */
     public void fileUpload(Activity activity, String image, String requestMethod, ResponseListener<FileUploadModel> listener){
-        Map<String,Object> map = new HashMap<>();
-        map.put("image",image);
+        RequestParamBuilder requestParamBuilder = RequestParamBuilder.newInstance();
+        requestParamBuilder.putParam("image",image);
 
         Type type = new TypeToken<FileUploadModel>() {
         }.getType();
 
-        requestDataWithDialog(activity,requestMethod,map,type,listener);
+        requestDataWithDialog(activity,requestMethod,requestParamBuilder.create(),type,listener);
     }
 
     /***
@@ -51,12 +48,12 @@ public class PersonDataRequest extends TigerRequest {
      * @param listener
      */
     public void babyRelation(Activity activity, String requestMethod, ResponseListener<List<RelationBabyItemModel>> listener){
-        Map<String,Object> map = new HashMap<>();
+        RequestParamBuilder requestParamBuilder = RequestParamBuilder.newInstance();
 
         Type type = new TypeToken<List<RelationBabyItemModel>>() {
         }.getType();
 
-        requestDataWithDialog(activity,requestMethod,map,type,listener);
+        requestDataWithDialog(activity,requestMethod,requestParamBuilder.create(),type,listener);
 
     }
 
@@ -92,29 +89,29 @@ public class PersonDataRequest extends TigerRequest {
                 }]
      */
     public void updateUserData(Activity activity, String token, String sign, String icon, String nikeName, int relation, String address, double longitude, double latitude, int addrType, int floor, int layer, int room, String realName, String birthday, String notes, String deleteBabyIds, JSONArray babyList,String requestMethod,ResponseListener<String> listener){
-        HashMap<String,Object> param = new HashMap<>();
+        RequestParamBuilder requestParamBuilder = RequestParamBuilder.newInstance();
 
-        param.put("token",token);
-        param.put("sign",sign);
-        param.put("icon",icon);
-        param.put("nikeName",nikeName);
-        param.put("relation",relation);
-        param.put("address",address);
-        param.put("longitude",longitude);
-        param.put("latitude",latitude);
-        param.put("addrType",addrType);
-        param.put("floor",floor);
-        param.put("layer",layer);
-        param.put("room",room);
-        param.put("realName",realName);
-        param.put("birthday",birthday);
-        param.put("notes",notes);
-        param.put("deleteBabyIds",deleteBabyIds);
+    //    requestParamBuilder.putParam("token",token);
+   //     requestParamBuilder.putParam("sign",sign);
+        requestParamBuilder.putParam("icon",icon);
+        requestParamBuilder.putParam("nikeName",nikeName);
+        requestParamBuilder.putParam("relation",relation);
+        requestParamBuilder.putParam("address",address);
+        requestParamBuilder.putParam("longitude",longitude);
+        requestParamBuilder.putParam("latitude",latitude);
+        requestParamBuilder.putParam("addrType",addrType);
+        requestParamBuilder.putParam("floor",floor);
+        requestParamBuilder.putParam("layer",layer);
+        requestParamBuilder.putParam("room",room);
+        requestParamBuilder.putParam("realName",realName);
+        requestParamBuilder.putParam("birthday",birthday);
+        requestParamBuilder.putParam("notes",notes);
+        requestParamBuilder.putParam("deleteBabyIds",deleteBabyIds);
 
         Type type = new TypeToken<String>() {
         }.getType();
 
-        requestDataWithDialog(activity,requestMethod,param,type,listener);
+        requestDataWithDialog(activity,requestMethod,requestParamBuilder.create(),type,listener);
 
     }
 

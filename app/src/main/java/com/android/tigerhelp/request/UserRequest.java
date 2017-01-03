@@ -2,15 +2,13 @@ package com.android.tigerhelp.request;
 
 import android.app.Activity;
 
-import com.android.tigerhelp.entity.FileUploadModel;
 import com.android.tigerhelp.entity.UserModel;
 import com.android.tigerhelp.http.TigerRequest;
+import com.android.tigerhelp.http.request.RequestParamBuilder;
 import com.android.tigerhelp.http.responselistener.ResponseListener;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -31,13 +29,14 @@ public class UserRequest extends TigerRequest {
      * @param listener
      */
     public void login(Activity activity,String mobile,String password, String requestMethod, ResponseListener<UserModel> listener){
-        Map<String, Object> map = new HashMap<>();
-        map.put("mobileNum", mobile);
-        map.put("password", password);
+        RequestParamBuilder requestParamBuilder = RequestParamBuilder.newInstance();
+
+        requestParamBuilder.putParam("mobileNum", mobile);
+        requestParamBuilder.putParam("password", password);
 
         Type type = new TypeToken<UserModel>() {
         }.getType();
-        requestDataWithDialog(activity,requestMethod,map,type,listener);
+        requestDataWithDialog(activity,requestMethod,requestParamBuilder.create(),type,listener);
 
     }
 
@@ -50,13 +49,13 @@ public class UserRequest extends TigerRequest {
      * @param listener
      */
     public void getCode(Activity activity, String mobileNum, String type, String requestMethod, ResponseListener<String> listener){
-        Map<String, Object> map = new HashMap<>();
-        map.put("mobileNum", mobileNum);
-        map.put("type", type);//type:1-注册获取验证码（一键登录页调用此），2-忘记密码获取验证码, 3-设置支付密码获取验证码
+        RequestParamBuilder requestParamBuilder = RequestParamBuilder.newInstance();
+        requestParamBuilder.putParam("mobileNum", mobileNum);
+        requestParamBuilder.putParam("type", type);//type:1-注册获取验证码（一键登录页调用此），2-忘记密码获取验证码, 3-设置支付密码获取验证码
 
         Type typeModel = new TypeToken<String>() {
         }.getType();
-        requestDataWithDialog(activity,requestMethod,map,typeModel,listener);
+        requestDataWithDialog(activity,requestMethod,requestParamBuilder.create(),typeModel,listener);
     }
 
     /****
@@ -68,14 +67,14 @@ public class UserRequest extends TigerRequest {
      * @param listener
      */
     public void register(Activity activity,String mobileNum,String code,String requestMethod,ResponseListener<UserModel> listener){
-        Map<String,Object> map = new HashMap<>();
-        map.put("mobileNum",mobileNum);
-        map.put("code",code);
+        RequestParamBuilder requestParamBuilder = RequestParamBuilder.newInstance();
+        requestParamBuilder.putParam("mobileNum",mobileNum);
+        requestParamBuilder.putParam("code",code);
 
         Type type = new TypeToken<UserModel>() {
         }.getType();
 
-        requestDataWithDialog(activity,requestMethod,map,type,listener);
+        requestDataWithDialog(activity,requestMethod,requestParamBuilder.create(),type,listener);
     }
 
 }
