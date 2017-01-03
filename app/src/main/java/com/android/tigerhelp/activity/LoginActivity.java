@@ -111,9 +111,9 @@ public class LoginActivity extends BaseActivity {
            @Override
            public void onSuccess(UserModel userModel) {
                showToast("登录成功");
-               int userid = userModel.getUserid();
+               int userId = userModel.getUserid();
                String token = userModel.getToken();
-               ShareUtils.save(LoginActivity.this,"userId",userid);
+               ShareUtils.save(LoginActivity.this,"userId",String.valueOf(userId));
                ShareUtils.save(LoginActivity.this,"token",token);
 
                boolean turnUpdateUser = userModel.isTurnUpdateUser();
