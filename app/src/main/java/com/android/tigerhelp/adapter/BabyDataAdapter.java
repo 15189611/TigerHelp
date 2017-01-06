@@ -21,7 +21,12 @@ public class BabyDataAdapter extends BaseQuickAdapter<RelationBabyItemModel> {
     protected void convert(BaseViewHolder helper, RelationBabyItemModel item) {
         try {
             helper.setText(R.id.item_name,item.getName());
-
+            boolean selected = item.isSelected();
+            if(selected){
+                helper.setImageResource(R.id.select_iv,R.mipmap.selected);
+            }else{
+                helper.setImageResource(R.id.select_iv,R.mipmap.un_select);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

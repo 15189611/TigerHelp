@@ -116,7 +116,7 @@
             android:paddingBottom="22dp"
             android:text="@string/address"
             />
-        <TextView
+        <EditText
             android:layout_width="220dp"
             android:id="@+id/address_et"
             style="@style/Text_Name_Person_Value"
@@ -172,6 +172,7 @@
         <EditText
             android:id="@+id/birthday_et"
             style="@style/Text_Name_Person_Value"
+            android:digits="0123456789-"
             android:hint="@string/birthday_hint"
             />
         <View
@@ -356,7 +357,176 @@
             android:hint="@string/baby_class_hint"
             />
     </RelativeLayout>
+
+     <LinearLayout
+         android:id="@+id/baby_add_rl"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:visibility="gone"
+         android:orientation="vertical"
+         >
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:paddingLeft="@dimen/margin_ten"
+             android:layout_marginTop="15dp"
+             android:paddingRight="@dimen/margin_ten"
+             android:layout_height="43dp">
+             <ImageView
+                 android:id="@+id/start_6_tw"
+                 style="@style/Start_Person"
+                 />
+             <TextView
+                 style="@style/Text_Name_Person"
+                 android:layout_toRightOf="@+id/start_6_tw"
+                 android:text="@string/baby_name"
+                 />
+             <EditText
+                 android:id="@+id/baby_name_add"
+                 style="@style/Text_Name_Person_Value"
+                 android:hint="@string/baby_name_hint"
+                 />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="0.3dp"
+                 android:layout_alignParentBottom="true"
+                 android:background="@color/person_data_color"
+                 />
+         </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:paddingLeft="@dimen/margin_ten"
+             android:paddingRight="@dimen/margin_ten"
+             android:layout_height="43dp">
+             <ImageView
+                 android:id="@+id/start_7_tw"
+                 style="@style/Start_Person"
+                 />
+             <TextView
+                 style="@style/Text_Name_Person"
+                 android:layout_toRightOf="@+id/start_7_tw"
+                 android:text="@string/baby_name_reality"
+                 />
+             <EditText
+                 android:id="@+id/baby_name_reality_add"
+                 style="@style/Text_Name_Person_Value"
+                 android:hint="@string/real_name_hint"
+                 />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="0.3dp"
+                 android:layout_alignParentBottom="true"
+                 android:background="@color/person_data_color"
+                 />
+         </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:paddingLeft="@dimen/margin_ten"
+             android:paddingRight="@dimen/margin_ten"
+             android:layout_height="43dp">
+             <ImageView
+                 android:id="@+id/start_8_tw"
+                 style="@style/Start_Person"
+                 />
+             <TextView
+                 style="@style/Text_Name_Person"
+                 android:layout_toRightOf="@+id/start_8_tw"
+                 android:text="@string/baby_sex"
+                 />
+             <EditText
+                 android:id="@+id/baby_sex_add"
+                 style="@style/Text_Name_Person_Value"
+                 android:hint="@string/select_sex"
+                 />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="0.3dp"
+                 android:layout_alignParentBottom="true"
+                 android:background="@color/person_data_color"
+                 />
+         </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:paddingLeft="@dimen/margin_ten"
+             android:paddingRight="@dimen/margin_ten"
+             android:layout_height="43dp">
+             <ImageView
+                 android:id="@+id/start_9_tw"
+                 style="@style/Start_Person"
+                 />
+             <TextView
+                 style="@style/Text_Name_Person"
+                 android:layout_toRightOf="@+id/start_9_tw"
+                 android:text="@string/baby_birthday"
+                 />
+             <EditText
+                 android:id="@+id/baby_birthday_add"
+                 style="@style/Text_Name_Person_Value"
+                 android:hint="@string/baby_birthday_hint"
+                 />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="0.3dp"
+                 android:layout_alignParentBottom="true"
+                 android:background="@color/person_data_color"
+                 />
+         </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:paddingLeft="@dimen/margin_ten"
+             android:paddingRight="@dimen/margin_ten"
+             android:layout_height="43dp">
+             <ImageView
+                 android:id="@+id/start_10_tw"
+                 style="@style/Start_Person"
+                 />
+             <TextView
+                 style="@style/Text_Name_Person"
+                 android:layout_toRightOf="@+id/start_10_tw"
+                 android:text="@string/baby_school"
+                 />
+             <EditText
+                 android:id="@+id/baby_school_add"
+                 style="@style/Text_Name_Person_Value"
+                 android:hint="@string/baby_school_hint"
+                 />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="0.3dp"
+                 android:layout_alignParentBottom="true"
+                 android:background="@color/person_data_color"
+                 />
+         </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:paddingLeft="@dimen/margin_ten"
+             android:paddingRight="@dimen/margin_ten"
+             android:layout_height="43dp">
+             <ImageView
+                 android:id="@+id/start_11_tw"
+                 style="@style/Start_Person"
+                 />
+             <TextView
+                 style="@style/Text_Name_Person"
+                 android:layout_toRightOf="@+id/start_11_tw"
+                 android:text="@string/baby_class"
+                 />
+             <EditText
+                 android:id="@+id/baby_class_add"
+                 style="@style/Text_Name_Person_Value"
+                 android:hint="@string/baby_class_hint"
+                 />
+         </RelativeLayout>
+
+     </LinearLayout>
+
     <RelativeLayout
+        android:id="@+id/add_baby_bt"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:paddingLeft="@dimen/margin_ten"
@@ -382,11 +552,6 @@
             android:layout_marginLeft="6dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/add_icon"
-            />
-        <EditText
-            android:id="@+id/baby_add"
-            style="@style/Text_Name_Person_Value"
-            android:text="你好"
             />
     </RelativeLayout>
 

@@ -42,6 +42,13 @@
     <string name="take_photo">拍照</string>
     <string name="select_photo">从相册中选择</string>
     <string name="cancel">取消</string>
+    <string name="residence_type">住宅类型:</string>
+    <string name="villa">别墅</string>
+    <string name="plot_address">小区地址:</string>
+    <string name="floor">号楼</string>
+    <string name="tier">层</string>
+    <string name="room">室</string>
+    <string name="house_number">门牌号</string>
 
 
 </resources>

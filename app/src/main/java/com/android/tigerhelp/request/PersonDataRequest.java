@@ -1,11 +1,10 @@
 package com.android.tigerhelp.request;
 
 import android.app.Activity;
-import android.os.Bundle;
+import android.util.Log;
 
 import com.android.tigerhelp.entity.FileUploadModel;
 import com.android.tigerhelp.entity.RelationBabyItemModel;
-import com.android.tigerhelp.entity.RelationBabyModel;
 import com.android.tigerhelp.http.TigerRequest;
 import com.android.tigerhelp.http.responselistener.ResponseListener;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +21,8 @@ import java.util.Map;
  */
 
 public class PersonDataRequest extends TigerRequest {
+
+    private static final String UPDATE_DATA = "update";
 
     public static PersonDataRequest newInstance() {
         return new PersonDataRequest();
@@ -91,7 +92,8 @@ public class PersonDataRequest extends TigerRequest {
                      myClass：宝宝班级
                 }]
      */
-    public void updateUserData(Activity activity, String token, String sign, String icon, String nikeName, int relation, String address, double longitude, double latitude, int addrType, int floor, int layer, int room, String realName, String birthday, String notes, String deleteBabyIds, JSONArray babyList,String requestMethod,ResponseListener<String> listener){
+    public void updateUserData(Activity activity, String token, String sign, String icon, String nikeName, int relation, String address, double longitude, double latitude, int addrType, int floor, int layer, int room, String realName, String birthday, String notes, String deleteBabyIds,
+                               JSONArray babyList, ResponseListener<String> listener){
         HashMap<String,Object> param = new HashMap<>();
 
         param.put("token",token);
@@ -111,10 +113,15 @@ public class PersonDataRequest extends TigerRequest {
         param.put("notes",notes);
         param.put("deleteBabyIds",deleteBabyIds);
 
+        param.put("babyList",babyList);
+
+        Log.i("TAG",param.toString());
+
+
         Type type = new TypeToken<String>() {
         }.getType();
 
-        requestDataWithDialog(activity,requestMethod,param,type,listener);
+        requestDataWithDialog(activity,UPDATE_DATA,param,type,listener);
 
     }
 

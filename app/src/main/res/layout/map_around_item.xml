@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/address_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/black"
+            android:text="芭比馒头,金钟路店"
+            />
+        <TextView
+            android:id="@+id/address_details"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:textSize="@dimen/sp_12"
+            android:text="上海市长宁区633号晨讯科技大楼A楼"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/margin_eight"
+        android:layout_height="@dimen/margin_forty_five"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_11"
+        android:src="@mipmap/icon_right"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/ly"
+        android:background="@color/fengexian"
+        android:layout_marginTop="@dimen/dp_6"
+        />
+</RelativeLayout>

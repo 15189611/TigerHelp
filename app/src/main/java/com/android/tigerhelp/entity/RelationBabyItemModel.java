@@ -11,6 +11,8 @@ public class RelationBabyItemModel implements Serializable {
     private int index;
     private String name;
 
+    private boolean isSelected;
+
     public int getIndex() {
         return index;
     }
@@ -25,5 +27,13 @@ public class RelationBabyItemModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

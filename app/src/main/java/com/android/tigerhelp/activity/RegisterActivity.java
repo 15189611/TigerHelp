@@ -137,8 +137,6 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFailure(AppException e) {
-                Log.i("TAG","getCode--->onFailure=============="+e.errorMsg);
-                Log.i("TAG","getCode--->onFailure=============="+e.errorCode);
                 if(TextUtils.isEmpty(e.errorCode)){
                     if(!TextUtils.isEmpty(e.errorMsg)){
                         showToast(e.errorMsg);

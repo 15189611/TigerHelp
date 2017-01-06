@@ -1,0 +1,19 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!--  <solid android:color="@color/new_title_input_bg"/>
+      <corners android:radius="100dp"/>-->
+
+    <!-- 填充的颜色 -->
+    <solid android:color="#ffffffff" />
+    <!-- 设置圆角 -->
+    <corners android:radius="3dp" />
+    <!-- 设置字隔边框的间距 -->
+    <!-- <padding
+         android:bottom="5dp"
+         android:left="5dp"
+         android:top="5dp" />-->
+    <!-- 描边 -->
+    <stroke
+        android:width="0.6dp"
+        android:color="#ececec" />
+</shape>

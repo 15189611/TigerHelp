@@ -1,15 +1,18 @@
 package com.android.tigerhelp.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.TextView;
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -23,11 +26,22 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.android.tigerhelp.R;
+import com.android.tigerhelp.adapter.MapAroundAdapter;
 import com.android.tigerhelp.base.BaseActivity;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
+
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -37,38 +51,42 @@ import butterknife.Bind;
  */
 
 public class AddressSelectActivity extends BaseActivity implements AMap.OnMapClickListener,
-        LocationSource,
-        AMapLocationListener,
-        CompoundButton.OnCheckedChangeListener {
+        LocationSource, AMapLocationListener, CompoundButton.OnCheckedChangeListener ,PoiSearch.OnPoiSearchListener{
 
-    private static final float sDefaultZoomLevel = 16.1f;
+    private static final float sDefaultZoomLevel = 14.1f;
+    private static final int sDefaultPageSize = 20;
+    private static final int sDefaultPageNum = 0;
 
     @Bind(R.id.map)
     MapView mMapView;
-    @Bind(R.id.address_tv)
-    TextView address_tv;
-    @Bind(R.id.commit_sure)
-    TextView commit_sure;
+    @Bind(R.id.aroundRecyclerView)
+    RecyclerView aroundRecyclerView;
 
     /**
      * 用于显示当前的位置
      */
-    private AMapLocationClient mlocationClient;
+    private AMapLocationClient mLocationClient;
     private OnLocationChangedListener mListener;
     private AMapLocationClientOption mLocationOption;
 
     //定位
     private UiSettings mUiSettings;
-
     private AMap mAMap;
 
+    //Poi条件查询类
+    private PoiSearch.Query query;
+    private PoiSearch poiSearch;
+
+    private PoiResult mPoiResult;
+    private List<PoiItem> poiItemList = new ArrayList<>();
+    private MapAroundAdapter mapAroundAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMapView.onCreate(savedInstanceState);//在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
-        Log.i("TAG","onCreate----------");
         initMap();
+        initRecyclerView();
 
         String sHA1 = sHA1(this);
         Log.i("TAG","sHA1========="+sHA1);
@@ -81,6 +99,9 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
         if (mAMap == null) {
             mAMap = mMapView.getMap();
             mUiSettings = mAMap.getUiSettings();
+
+            CameraUpdate cameraUpdate = CameraUpdateFactory.zoomTo(sDefaultZoomLevel);
+            mAMap.moveCamera(cameraUpdate);
         }
         if (mAMap != null && mUiSettings != null) {
             mUiSettings.setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_RIGHT);
@@ -97,10 +118,17 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
             myLocationStyle.radiusFillColor(Color.argb(0,0,0,0));//设置圆形填充颜色
             mAMap.setMyLocationStyle(myLocationStyle);
 
-            CameraUpdate cameraUpdate = CameraUpdateFactory.zoomTo(sDefaultZoomLevel);
-            mAMap.moveCamera(cameraUpdate);
         }
     }
+
+    private void initRecyclerView(){
+        aroundRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mapAroundAdapter = new MapAroundAdapter(poiItemList);
+        aroundRecyclerView.setAdapter(mapAroundAdapter);
+        recyclerViewOnItem();
+    }
+
+
 
     public static String sHA1(Context context) {
         try {
@@ -130,7 +158,6 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
 
     @Override
     protected int getLayoutResId() {
-        Log.i("TAG","getLayoutResId----------");
         return R.layout.address_select;
     }
 
@@ -153,8 +180,8 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
     protected void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();//销毁地图
-        if (null != mlocationClient) {
-            mlocationClient.onDestroy();
+        if (null != mLocationClient) {
+            mLocationClient.onDestroy();
         }
     }
 
@@ -185,13 +212,13 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
     @Override
     public void activate(OnLocationChangedListener listener) {
         mListener = listener;
-        if (mlocationClient == null) {
-            mlocationClient = new AMapLocationClient(this);
+        if (mLocationClient == null) {
+            mLocationClient = new AMapLocationClient(this);
             mLocationOption = new AMapLocationClientOption();
-            mlocationClient.setLocationListener(this); // 设置定位监听
+            mLocationClient.setLocationListener(this); // 设置定位监听
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy); // 设置为高精度定位模式
             mLocationOption.setOnceLocation(true);// 只是为了获取当前位置，所以设置为单次定位
-            mlocationClient.setLocationOption(mLocationOption);// 设置定位参数
+            mLocationClient.setLocationOption(mLocationOption);// 设置定位参数
             mLocationOption.setHttpTimeOut(20000);//单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
             mLocationOption.setNeedAddress(true);//设置是否返回地址信息（默认返回地址信息）
             mLocationOption.setLocationCacheEnable(true);//缓存机制，默认为true
@@ -199,41 +226,7 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
             //获取最近3s内精度最高的一次定位结果：
             //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
             mLocationOption.setOnceLocationLatest(true);
-            mlocationClient.startLocation();
-
-          /*  //初始化定位
-            mlocationClient = new AMapLocationClient(this);
-            //设置定位回调监听
-            mlocationClient.setLocationListener(this);
-            //初始化AMapLocationClientOption对象：设置发起定位的模式和相关参数。
-            mLocationOption = new AMapLocationClientOption();
-            //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。AMapLocationMode.Device_Sensors：仅设备模式。Battery_Saving：低耗能模式
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-
-            //获取一次定位结果：
-            //该方法默认为false。
-            mLocationOption.setOnceLocation(true);
-
-            //获取最近3s内精度最高的一次定位结果：
-            //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-            mLocationOption.setOnceLocationLatest(true);
-            //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-            mLocationOption.setInterval(2000);
-            //设置是否返回地址信息（默认返回地址信息）
-            mLocationOption.setNeedAddress(true);
-            //设置是否强制刷新WIFI，默认为true，强制刷新。
-            mLocationOption.setWifiActiveScan(false);
-            //设置是否允许模拟位置,默认为false，不允许模拟位置
-            mLocationOption.setMockEnable(false);
-            //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
-            mLocationOption.setHttpTimeOut(20000);
-            //缓存机制，默认为true
-            mLocationOption.setLocationCacheEnable(true);
-
-            //给定位客户端对象设置定位参数
-            mlocationClient.setLocationOption(mLocationOption);
-            //启动定位
-            mlocationClient.startLocation();*/
+            mLocationClient.startLocation();
         }
     }
 
@@ -243,11 +236,11 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
     @Override
     public void deactivate() {
         mListener = null;
-        if (mlocationClient != null) {
-            mlocationClient.stopLocation();
-            mlocationClient.onDestroy();
+        if (mLocationClient != null) {
+            mLocationClient.stopLocation();
+            mLocationClient.onDestroy();
         }
-        mlocationClient = null;
+        mLocationClient = null;
     }
 
     @Override
@@ -260,22 +253,14 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-
                 double latitude = aMapLocation.getLatitude();//纬度
                 double longitude = aMapLocation.getLongitude();//经度
-                String address = aMapLocation.getAddress();
-                if(!TextUtils.isEmpty(address)){
-                    address_tv.setText(address);
-                }
 
-                Log.i("TAG","定位成功==="+aMapLocation.getErrorCode());
-                Log.i("TAG","定位成功===latitude="+latitude);
-                Log.i("TAG","定位成功===longitude="+longitude);
-                Log.i("TAG","定位成功==="+aMapLocation.getStreetNum());
-                Log.i("TAG","定位成功==="+aMapLocation.getStreet());
-                Log.i("TAG","定位成功==="+aMapLocation.getFloor());
-                Log.i("TAG","定位成功==="+aMapLocation.getAddress());
+                doSearchQery(latitude,longitude);
 
+                LatLng marker1 = new LatLng(latitude, longitude);//设置中心点和缩放比例
+                mAMap.moveCamera(CameraUpdateFactory.changeLatLng(marker1));
+                mAMap.moveCamera(CameraUpdateFactory.zoomTo(sDefaultZoomLevel));
             } else {
                 Log.i("TAG","location error-----ErrorCode="+aMapLocation.getErrorCode()
                         +"--errInfo="+aMapLocation.getErrorInfo());
@@ -286,5 +271,68 @@ public class AddressSelectActivity extends BaseActivity implements AMap.OnMapCli
     @Override
     public void onMapClick(LatLng latLng) {
 
+    }
+
+    /**
+     * poi搜索
+     */
+    private void doSearchQery(double latitude,double longitude){
+        query = new PoiSearch.Query("", "", "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        query.setPageSize(sDefaultPageSize);
+        query.setPageNum(sDefaultPageNum);
+
+        poiSearch = new PoiSearch(this,query);
+        poiSearch.setOnPoiSearchListener(this);
+        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latitude,longitude),500,true));
+        poiSearch.searchPOIAsyn();//异步搜索
+    }
+
+
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int code) {
+        if(code == AMapException.CODE_AMAP_SUCCESS){
+           if(poiResult != null && poiResult.getQuery() != null){
+                if(poiResult.getQuery().equals(query)){//是否是同一条
+                    mPoiResult = poiResult;
+                    poiItemList = mPoiResult.getPois();
+
+                    Log.i("TAG","poiItemList========="+poiItemList.size());
+                    mapAroundAdapter.getData().clear();
+                    mapAroundAdapter.addData(poiItemList);
+                }
+           }
+        }
+
+    }
+
+    @Override
+    public void onPoiItemSearched(com.amap.api.services.core.PoiItem poiItem, int i) {
+
+    }
+
+
+    private void recyclerViewOnItem(){
+        aroundRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void SimpleOnItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if(poiItemList.size() == 0){
+                    return;
+                }
+
+                PoiItem poiItem = poiItemList.get(position);
+                if(null == poiItem){
+                    return;
+                }
+
+                String address = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet();
+                Intent intent = new Intent(AddressSelectActivity.this,AddressSelectDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("address",address);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                AddressSelectActivity.this.finish();
+            }
+        });
     }
 }
