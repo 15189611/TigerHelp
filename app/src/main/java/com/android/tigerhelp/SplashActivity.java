@@ -2,7 +2,7 @@ package com.android.tigerhelp;
 
 import android.content.Intent;
 
-import com.android.tigerhelp.activity.LoginActivity;
+import com.android.tigerhelp.activity.BannerActivity;
 import com.android.tigerhelp.base.BaseActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -38,7 +38,7 @@ public class SplashActivity extends BaseActivity {
         subscribe = Observable.timer(3, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
             @Override
             public void call(Long aLong) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SplashActivity.this, BannerActivity.class);
                 startActivity(intent);
                 finish();
             }

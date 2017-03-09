@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.tigerhelp" >
+    package="com.android.tigerhelp">
 
 
     <!--用于进行网络定位-->
@@ -26,13 +26,15 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
 
     <application
-        android:allowBackup="false"
         android:name=".TigerApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".SplashActivity" android:theme="@style/LoadingActivtyTheme">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/LoadingActivtyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,29 +46,33 @@
         <service android:name="com.amap.api.location.APSService"></service>
 
         //高德地图key
-        <meta-data android:name="com.amap.api.v2.apikey"
-                    android:value="2aa833c28770373a8f5d8c34aa298e94">
-        </meta-data>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="2aa833c28770373a8f5d8c34aa298e94"></meta-data>
 
 
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
 
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            />
-        <activity android:name=".activity.RegisterActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            />
-        <activity android:name=".activity.PersonDataActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".activity.PersonDataActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
-        <activity android:name=".activity.AddressSelectActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".activity.AddressSelectActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.BannerActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

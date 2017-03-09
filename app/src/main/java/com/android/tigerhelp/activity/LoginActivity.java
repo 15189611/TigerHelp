@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity {
                   startActivity(new Intent(LoginActivity.this,PersonDataActivity.class));
                    LoginActivity.this.finish();
                }else{
-                   startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                   startActivity(new Intent(LoginActivity.this,BannerActivity.class));
                    LoginActivity.this.finish();
                }
            }
